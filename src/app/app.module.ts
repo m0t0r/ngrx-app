@@ -4,13 +4,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './products/state/reducers';
+import { StoreModule, MetaReducer } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { reducers, metaReducers } from './state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +18,9 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    EffectsModule.forRoot([AppEffects]),
+    StoreDevtoolsModule.instrument({ name: 'NgRx Pizza App', maxAge: 50, logOnly: environment.production }),
+    StoreRouterConnectingModule.forRoot(),
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {
@@ -25,9 +28,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
         strictActionImmutability: true,
       },
     }),
-    EffectsModule.forRoot([AppEffects]),
-    StoreDevtoolsModule.instrument({ maxAge: 50, logOnly: environment.production }),
-    StoreRouterConnectingModule.forRoot(),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [],
   bootstrap: [AppComponent],
