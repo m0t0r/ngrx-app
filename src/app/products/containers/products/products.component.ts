@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromState from '../../state';
 import { Pizza } from '../../models/pizza.model';
@@ -24,8 +24,12 @@ import { Observable } from 'rxjs';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit {
   pizzas$: Observable<Pizza[]> = this.store.pipe(select(fromState.getAllPizzas));
 
   constructor(private store: Store<fromState.ProductsState>) {}
+
+  ngOnInit(): void {
+    this.store.dispatch(fromState.loadPizzas());
+  }
 }

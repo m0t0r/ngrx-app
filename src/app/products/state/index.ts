@@ -1,2 +1,3 @@
 export * from './reducers';
-export * from './actions/pizzas.actions';
+export * from './actions';
+export * from './effects';

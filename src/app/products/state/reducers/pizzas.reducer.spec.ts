@@ -1,5 +1,21 @@
 import { reducer, initialState } from './pizzas.reducer';
 import * as fromPizzaActions from '../actions/pizzas.actions';
+import * as fromPizzas from './pizzas.reducer';
+import * as fromProducts from './';
+
+const createPizzasState = ({ data = [], loading = false, loaded = false } = {}) => ({
+  data,
+  loading,
+  loaded,
+});
+
+const createProductsState = ({ pizzas = createPizzasState() } = {}) => ({
+  pizzas,
+});
+
+const createState = ({ products = createProductsState() } = {}) => ({
+  products,
+});
 
 describe('Reducer: Pizzas', () => {
   describe('Load Pizzas action', () => {
@@ -24,5 +40,36 @@ describe('Reducer: Pizzas', () => {
 
       expect(result).toEqual({ ...initialState, loading: false, loaded: false });
     });
+  });
+});
+
+describe('Selectors: Pizzas', () => {
+  it('should get products state', () => {
+    const state = createState();
+
+    // expect(fromProducts.getProductsState(state)).toBe(state.products);
+  });
+
+  it('should get pizzas state', () => {
+    const state = createProductsState();
+    // expect(fromProducts.getPizzaState({ pizzas: {} })).toBe(state.pizzas);
+  });
+
+  it('should get all pizzas', () => {
+    const state = createPizzasState();
+
+    // expect(fromProducts.getAllPizzas(state)).toBe(state.data);
+  });
+
+  it('should get products state', () => {
+    const state = createPizzasState();
+
+    // expect(fromProducts.getPizzasLoaded(state)).toBe(state.loaded);
+  });
+
+  it('should get products state', () => {
+    const state = createPizzasState();
+
+    // expect(fromProducts.getPizzasLoading(state)).toBe(state.loading);
   });
 });

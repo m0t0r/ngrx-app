@@ -9,6 +9,7 @@ import * as fromComponents from './components';
 import * as fromContainers from './containers';
 import * as fromServices from './services';
 import * as fromProducts from './state';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import * as fromProducts from './state';
     ReactiveFormsModule,
     HttpClientModule,
     StoreModule.forFeature(fromProducts.productsFeatureKey, fromProducts.reducers),
+    EffectsModule.forFeature(fromProducts.effects),
     ProductsRoutingModule,
   ],
   providers: [...fromServices.services],
